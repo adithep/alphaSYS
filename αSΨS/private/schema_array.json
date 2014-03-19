@@ -1,0 +1,434 @@
+[
+  {
+    "doc_name": "contact_button",
+    "doc_schema": "doc_schema"
+  },
+
+  {
+    "doc_name": "titles",
+    "doc_schema": "doc_schema",
+    "schema": [
+      {
+        "value_type": "oid",
+        "key_name": "doc_schema",
+        "value_schema": "doc_schema"
+      },
+      {
+        "value_type": "string",
+        "key_name": "doc_name"
+      }
+    ]
+  },
+  
+
+  {
+    "doc_name": "currencies",
+    "doc_schema": "doc_schema",
+    "schema": [
+      {
+        "value_type": "oid",
+        "key_name": "doc_schema",
+        "value_schema": "doc_schema"
+      },
+      {
+        "value_type": "string",
+        "key_name": "doc_name"
+      },
+      {
+        "value_type": "number",
+        "key_name": "usd_exchange_rate"
+      },
+      {
+        "value_type": "number",
+        "key_name": "default"
+      },
+      {
+        "value_type": "string",
+        "key_name": "symbol"
+      },
+      {
+        "value_type": "string",
+        "key_name": "symbol_native"
+      },
+      {
+        "value_type": "string",
+        "key_name": "currency_name"
+      },
+      {
+        "value_type": "string",
+        "key_name": "currency_code"
+      },
+      {
+        "value_type": "string",
+        "key_name": "currency_name_plural"
+      }
+    ]
+  },
+
+  {
+    "doc_name": "countries",
+    "doc_schema": "doc_schema",
+    "schema": [
+      {
+        "value_type": "oid",
+        "key_name": "doc_schema",
+        "value_schema": "doc_schema"
+      },
+      {
+        "value_type": "string",
+        "key_name": "doc_name"
+      },
+      {
+        "value_type": "array",
+        "key_name": "borders",
+        "array_values": {
+          "value_type": "string"
+        }
+      },
+      {
+        "value_type": "array",
+        "key_name": "latlng",
+        "array_values": {
+          "value_type": "number"
+        }
+      },
+      {
+        "value_type": "number",
+        "key_name": "population"
+      },
+      {
+        "value_type": "array",
+        "key_name": "calling_code",
+        "array_values": {
+          "value_type": "string"
+        }
+      },
+      {
+        "value_type": "array",
+        "key_name": "currency",
+        "array_values": {
+          "value_type": "oid",
+          "value_schema": "currencies"
+        }
+      },
+      {
+        "value_type": "string",
+        "key_name": "cca3"
+      },
+      {
+        "value_type": "string",
+        "key_name": "cca2"
+      },
+      {
+        "value_type": "string",
+        "key_name": "ccn3"
+      },
+      {
+        "value_type": "array",
+        "key_name": "tld",
+        "array_values": {
+          "value_type": "string"
+        }
+      },
+      {
+        "value_type": "string",
+        "key_name": "native_name"
+      },
+      {
+        "value_type": "string",
+        "key_name": "capital"
+      },
+      {
+        "value_type": "array",
+        "key_name": "alt_spellings",
+        "array_values": {
+          "value_type": "string"
+        }
+      },
+      {
+        "value_type": "string",
+        "key_name": "region"
+      },
+      {
+        "value_type": "string",
+        "key_name": "sub_region"
+      },
+      {
+        "value_type": "array",
+        "key_name": "language",
+        "array_values": {
+          "value_type": "string"
+        }
+      }
+    ] 
+  },
+
+  {
+    "doc_name": "services",
+    "doc_schema": "doc_schema",
+    "schema": [
+      {
+        "value_type": "oid",
+        "key_name": "doc_schema",
+        "value_schema": "doc_schema"
+      },
+      {
+        "value_type": "string",
+        "key_name": "doc_name"
+      }
+    ]
+  },
+
+  {
+    "doc_name": "cities",
+    "doc_schema": "doc_schema",
+    "schema": [
+      {
+        "value_type": "oid",
+        "key_name": "doc_schema",
+        "value_schema": "doc_schema"
+      },
+      {
+        "value_type": "string",
+        "key_name": "doc_name"
+      },
+      {
+        "value_type": "number",
+        "key_name": "population"
+      },
+      {
+        "value_type": "oid",
+        "key_name": "country",
+        "value_schema": "countries"
+      },
+      {
+        "value_type": "array",
+        "key_name": "latlng",
+        "array_values": {
+          "value_type": "number"
+        }
+      }
+    ]
+  },
+
+  {
+    "doc_name": "humans",
+    "doc_schema": "doc_schema",
+    "schema": [
+      {
+        "value_type": "oid",
+        "key_name": "doc_schema",
+        "value_schema": "doc_schema"
+      },
+      {
+        "value_type": "object",
+        "key_name": "full_name",
+        "placeholder": "Full Name",
+        "object_keys": [
+          {
+            "value_type": "oid",
+            "key_name": "titles",
+            "value_schema": "titles",
+            "input_starting": true,
+            "input_starting_sort": 0,
+            "select": true,
+            "array": false,
+            "input_size": 1,
+            "input_small_size": 12,
+            "placeholder": "Titles"
+          },
+          {
+            "value_type": "string",
+            "key_name": "first_name",
+            "input_type": "text",
+            "input_starting": true,
+            "input_starting_sort": 1,
+            "input": true,
+            "array": false,
+            "input_size": 4,
+            "input_small_size": 12,
+            "placeholder": "First Name"
+          },
+          {
+            "value_type": "string",
+            "key_name": "middle_name",
+            "input_type": "text",
+            "button_name": "Middle Name",
+            "input": true,
+            "array": false,
+            "input_size": 4,
+            "input_small_size": 11,
+            "placeholder": "Middle Name"
+          },
+          {
+            "value_type": "string",
+            "key_name": "last_name",
+            "input_type": "text",
+            "button_name": "Last Name",
+            "input_size": 4,
+            "input_small_size": 11,
+            "input": true,
+            "array": false,
+            "placeholder": "Last Name"
+          }
+        ]
+      },
+      {
+        "value_type": "object",
+        "key_name": "email",
+        "object_keys_arr": true,
+        "array": true,
+        "button_name": "Email",
+        "input_size": 5,
+        "input": true,
+        "select_small_size": 3,
+        "input_type": "text",
+        "input_small_size": 8,
+        "placeholder": "Email",
+        "object_keys": [
+          {
+            "value_type": "array",
+            "key_name": "main",
+            "select_opt_name": "Main",
+            "placeholder": "Main",
+            "array_values": {
+              "value_type": "email"
+            }
+          },
+         {
+            "value_type": "array",
+            "key_name": "personal",
+            "select_opt_name": "Personal",
+            "placeholder": "Personal",
+            "array_values": {
+              "value_type": "email"
+            }
+          },
+          {
+            "value_type": "array",
+            "key_name": "work",
+            "select_opt_name": "Work",
+            "placeholder": "Work",
+            "array_values": {
+              "value_type": "email"
+            }
+          }
+        ]
+      },
+      {
+        "value_type": "object",
+        "key_name": "mobile",
+        "object_keys_arr": true,
+        "array": true,
+        "input": true,
+        "input_size": 5,
+        "select_small_size": 3,
+        "input_small_size": 8,
+        "input_type": "text",
+        "button_name": "Mobile",
+        "placeholder": "Mobile",
+        "object_keys": [
+          {
+            "value_type": "array",
+            "key_name": "main",
+            "select_opt_name": "Main",
+            "placeholder": "Main",
+            "array_values": {
+              "value_type": "phone"
+            }
+          },
+         {
+            "value_type": "array",
+            "key_name": "personal",
+            "select_opt_name": "Personal",
+            "placeholder": "Personal",
+            "array_values": {
+              "value_type": "phone"
+            }
+          },
+          {
+            "value_type": "array",
+            "key_name": "work",
+            "select_opt_name": "Work",
+            "placeholder": "Work",
+            "array_values": {
+              "value_type": "phone"
+            }
+          }
+        ]
+      },
+      {
+        "value_type": "array",
+        "key_name": "service",
+        "button_name": "Service",
+        "array": true,
+        "placeholder": "Service",
+        "array_values": {
+          "value_type": "object",
+          "object_keys": [
+            {
+              "value_type": "date",
+              "input_type": "date",
+              "input": true,
+              "input_today": true,
+              "input_size": 2,
+              "input_small_size": 3,
+              "key_name": "date_of_entry",
+              "placeholder": "Date"
+            },
+            {
+              "value_type": "oid",
+              "key_name": "service",
+              "select": true,
+              "input_size": 2,
+              "input_small_size": 3,
+              "placeholder": "Service",
+              "value_schema": "services"
+            },
+            {
+              "value_type": "oid",
+              "key_name": "currency",
+              "select": true,
+              "input_size": 1,
+              "input_small_size": 2,
+              "placeholder": "Currecny",
+              "value_schema": "currencies"
+            },
+            {
+              "value_type": "currency",
+              "input_type": "number",
+              "input": true,
+              "input_size": 2,
+              "input_small_size": 3,
+              "placeholder": "Cost",
+              "key_name": "cost"
+            }
+          ]
+        }
+      },
+      {
+        "value_type": "date",
+        "placeholder": "Date of Birth",
+        "array": false,
+        "button_name": "Date of Birth",
+        "input_type": "date",
+        "input": true,
+        "input_size": 3,
+        "input_small_size": 11,
+        "key_name": "date_of_birth"
+      },
+      {
+        "value_type": "oid",
+        "placeholder": "City",
+        "array": false,
+        "key_name": "city",
+        "button_name": "City",
+        "input_type": "text",
+        "input_select": true,
+        "input_size": 4,
+        "input_small_size": 11,
+        "value_schema": "cities"
+      }
+    ]
+  }
+]

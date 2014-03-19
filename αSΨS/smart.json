@@ -1,0 +1,29 @@
+{
+  "packages": {
+    "npm": {},
+    "rloop": {
+      "path": "../packages/rloop"
+    },
+    "lodash": {
+      "path": "../packages/lodash"
+    },
+    "core-layout": {
+      "path": "../packages/core-layout"
+    },
+    "human-insert-form": {
+      "path": "../packages/human-insert-form"
+    },
+    "data-lib": {
+      "path": "../packages/data-lib"
+    },
+    "phoneformat": {
+      "path": "../packages/phoneformat"
+    },
+    "mongo-aggregation": {
+      "path": "../packages/mongo-aggregation"
+    },
+    "collection-hooks": {},
+    "repeat-component": {},
+    "jade": {}
+  }
+}

@@ -1,0 +1,78 @@
+head
+  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  title αSΨS
+
+body
+  +dbody
+
+template(name="layout")
+  div(id="parent")
+    nav(class="top-bar", data-topbar="")
+      ul(class="title-area")
+        li(class="name")
+          h1
+            a(href="/") αSΨS
+        li(class="toggle-topbar menu-icon")
+          a
+            span Menu
+      section(class="top-bar-section")
+        ul(class="left")
+          li(class="divider")
+          li
+            a(data-path="an", href="/moduletest") moduleTest
+          li
+            a(data-path="an", href="/add_contact") Add Contact
+          li
+            a(data-path="an", href="/display_humans") Display Contact
+        ul(class="right")
+          li(class="divider")
+          li(class="has-dropdown")
+            a User : #{currentUser.username}
+            ul(class="dropdown")
+              li
+                a(id="logout") logout
+    div(class="row", id="yieldchild")
+      div(class="large-12 columns")
+        +dyield
+
+template(name="dbody")
+  if currentUser.username
+    +layout
+  else
+    +login
+
+template(name="moduletest")
+  h1 αSΨS
+  h2 moduletest
+template(name="sorry_man")
+  h1 Cannot find anytin in this path!!! Panic!!! What to do??
+
+
+
+template(name="login")
+  div(class="row", id="logindiv")
+    div(class="large-12 columns")
+      h1 Login
+      if currentUser.username
+        h1 logged in
+      else if loggingIn
+        p Logging in...
+      else if creatingAccount
+        +newAccountForm
+      else
+        +loginForm
+
+template(name="newAccountForm")
+  input(type="text", id="email", placeholder="email")
+  input(type="text", id="name", placeholder="name")
+  input(type="text", id="username", placeholder="username")
+  input(type="password", id="password", placeholder="password")
+  button(id="createaccount") Create
+  p(id="loginform") (Login)
+
+template(name="loginForm")
+  input(type="text", id="username", placeholder="username")
+  input(type="password", id="password", placeholder="password")
+  button(id="login") Login
+  br
+  button(id="accountform") Create Account
