@@ -191,13 +191,13 @@ htmlobj = (schema, html, path, fath) ->
     switch schema[index].value_type
       when "object"
         if schema[index].placeholder
-          ht = ht + "{{#if this.#{p}}}<div><span data-path='#{p}'>#{schema[index].placeholder}</span><div>"
+          ht = ht + "{{#if this.#{p}}}<div class='mandiv'><span data-path='#{p}'>#{schema[index].placeholder}</span><div class='mandiv'>"
         ht = htmlobj(schema[index].object_keys, ht, p)
         if schema[index].placeholder
           ht = ht + "</div></div>{{/if}}"
       when "array"
         if schema[index].array_values.value_type is "object"
-          ht = ht + "{{#if this.#{p}}}<div><span data-path='#{p}'>#{schema[index].placeholder}:</span> {{#each dude this.#{p} this._id}}<div>"
+          ht = ht + "{{#if this.#{p}}}<div class='mandiv'><span data-path='#{p}'>#{schema[index].placeholder}:</span> {{#each dude this.#{p} this._id}}<div class='mandiv'>"
           f = p + ".{{$index}}"
           ht = htmlobj(schema[index].array_values.object_keys, ht, false, f)
           ht = ht + "</div>{{/each}}</div>"
