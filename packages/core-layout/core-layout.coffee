@@ -88,4 +88,16 @@ UI.body.helpers
 			obj.index = a.$index
 		obj
 
+	h_input_small: ->
+    a = 'small-'+this.input_small_size+ ' columns'
+    a
+
+  h_select_small: ->
+    a = 'small-'+this.select_small_size+ ' columns'
+    a
+
+  h_input_large: ->
+    a = 'large-'+this.input_size+ ' columns left parentdiv'
+    a
+
 

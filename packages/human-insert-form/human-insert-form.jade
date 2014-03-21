@@ -33,7 +33,7 @@ template(name="_each_form_element")
   if select
     div(class=h_input_small)
       select(name=this.key_name, data-sid=this._sid._str)
-        each select_options this._sid
+        each select_options this.value_schema
           if default
             option(value=this._id._str, selected="", data-def="1") #{this.doc_name}
           else
@@ -67,7 +67,10 @@ template(name="inline_editor")
   if is_editing this
     +__form_element
   else
-    {{>UI.elseBlock}}
+    +UI.elseBlock
 
 template(name="__form_element")
-  span hello #{kadui}
+  each kadui
+    div(class=h_input_large, data-sid=this._id._str)
+      div(class="row collapse")
+        +_each_form_element

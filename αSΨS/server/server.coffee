@@ -259,7 +259,6 @@ Meteor.startup ->
     doc_json.insert_json('humans', 'humans')
 
   if fs.existsSync('../../../../../../packages/core-layout/schema.html')
-    console.log "hello"
 
   else
     human_schema = DATA.findOne(doc_name: "humans", doc_schema: "doc_schema")

@@ -13,38 +13,9 @@ Deps.autorun ->
         delete doc._id
         HUMAN_FORM.insert(form_element: [doc], _sid: doc._sid, input_size: doc.input_size, input_starting: true)
 
-Template.add_contact.events
+Template._each_form_element.events
 
-  'click .save_human_json': (e, t) ->
-    Meteor.call "save_human_json"
-    
-  'click .click-input': (e, t) ->
-    t_id = e.currentTarget.dataset.id
-    id = new Meteor.Collection.ObjectID(t_id)
-    obj = ADATA.findOne(_id: id)
-    if (ADATA.find(parent: obj._id).count() is 0) or (obj.object_keys_arr)
-      obj._sid = obj._id
-      delete obj._id
-      if obj.array
-        HUMAN_FORM.insert(form_element: [obj], _sid: obj._sid, input_size: obj.input_size)
-      else
-        if HUMAN_FORM.findOne(_sid: obj._sid)
-          HUMAN_FORM.remove(_sid: obj._sid)
-        else
-          HUMAN_FORM.insert(form_element: [obj], _sid: obj._sid, input_size: obj.input_size)
-    else
-      obj = ojts(obj._id)
-      HUMAN_FORM.insert(obj)
-
-  'click .contact_form .close_input': (e, t) ->
-    id = new Meteor.Collection.ObjectID(e.currentTarget.dataset.id)
-    HUMAN_FORM.remove(_id: id)
-
-  'keypress .contact_form': (e, t) ->
-    if e.which is 13
-      e.preventDefault()
-
-  'blur .contact_form input[name=mobile]': (e, t) ->
+  'blur input[name=mobile]': (e, t) ->
     small = $(e.currentTarget).next()
     if e.currentTarget.dataset.value is "" or e.currentTarget.dataset.value is undefined
       e.currentTarget.value = ""
@@ -56,7 +27,7 @@ Template.add_contact.events
       small.hide()
     return
 
-  'keyup .contact_form input[name=mobile]': (e, t) ->
+  'keyup input[name=mobile]': (e, t) ->
     small = $(e.currentTarget).next()
     small.show()
     number = e.currentTarget.value
@@ -104,47 +75,13 @@ Template.add_contact.events
         e.currentTarget.dataset.country = ""
         return
 
-  'click .contact_form .form_submit': (e, t) ->
-    arr = []
-    index_p = 0
-    parentdiv = t.findAll('.parentdiv')
-    while index_p < parentdiv.length
-      barr = []
-      index = 0
-      input = $(parentdiv[index_p]).find(':input')
-      while index < input.length
-        value = undefined
-        id = new Meteor.Collection.ObjectID(input[index].dataset.sid)
-        if input[index].localName is 'select'
-          if input[index].value isnt "" and input[index].value isnt undefined
-            value = new Meteor.Collection.ObjectID(input[index].value)
-        else if $(input[index]).hasClass('input_select')
-          if input[index].dataset.value isnt "" and input[index].dataset.value isnt undefined
-            value = new Meteor.Collection.ObjectID(input[index].dataset.value)
-        else
-          value = input[index].value
-        if value isnt "" and value isnt undefined
-          barr[index] = {id: id, value: value}
-          index++
-        else
-          input.splice(index, 1)
-        
-      if barr.length > 0
-        arr[index_p] = barr
-        index_p++
-      else
-        parentdiv.splice(index_p, 1)
-      
-    console.log arr
-    Meteor.call "insert_human", arr
-
-  'focus .contact_form .input_select': (e, t) ->
+  'focus .input_select': (e, t) ->
     if e.currentTarget.value is ""
       $('.input_select_box').hide()
     else
       $('.input_select_box').show()
 
-  'blur .contact_form .input_select': (e, t) ->
+  'blur .input_select': (e, t) ->
     if e.currentTarget.value isnt ""
       if $('.blue_color').html()
         e.currentTarget.value = $('.blue_color').html()
@@ -157,13 +94,13 @@ Template.add_contact.events
     $('.input_select_box').hide()
     return
 
-  'mouseover .contact_form .lala_item': (e, t) ->
+  'mouseover .lala_item': (e, t) ->
     $('.lala_item').removeClass('blue_color')
     $(e.target).addClass('blue_color')
     b = $(e.target).html()
     $('.input_select').val(b)
 
-  'click .contact_form .input_select': (e, t) ->
+  'click .input_select': (e, t) ->
     if e.currentTarget.value isnt ""
 
       $('.input_select_box').show()
@@ -178,7 +115,7 @@ Template.add_contact.events
       pargs.session = subs
       return
 
-  'keyup .contact_form .input_select': (e, t) ->
+  'keyup .input_select': (e, t) ->
     if e.which is 40
       if $('.lala_item').hasClass("blue_color") is false
         $('.input_select_list li:first-child').addClass("blue_color")
@@ -241,34 +178,94 @@ Template.add_contact.events
           
         return
 
+Template.add_contact.events
 
-Template.add_contact.helpers
-  schema: ->
-    human = DATA.findOne(doc_name: "humans", doc_schema: "doc_schema")
-    if human
-      ADATA.find({p_doc_schema: human._id, button_name: {$exists: true}})
-  input_element: ->
-    HUMAN_FORM.find()
+  'click .save_human_json': (e, t) ->
+    Meteor.call "save_human_json"
+    
+  'click .click-input': (e, t) ->
+    t_id = e.currentTarget.dataset.id
+    id = new Meteor.Collection.ObjectID(t_id)
+    obj = ADATA.findOne(_id: id)
+    if (ADATA.find(parent: obj._id).count() is 0) or (obj.object_keys_arr)
+      obj._sid = obj._id
+      delete obj._id
+      if obj.array
+        HUMAN_FORM.insert(form_element: [obj], _sid: obj._sid, input_size: obj.input_size)
+      else
+        if HUMAN_FORM.findOne(_sid: obj._sid)
+          HUMAN_FORM.remove(_sid: obj._sid)
+        else
+          HUMAN_FORM.insert(form_element: [obj], _sid: obj._sid, input_size: obj.input_size)
+    else
+      obj = ojts(obj._id)
+      HUMAN_FORM.insert(obj)
+
+  'click .contact_form .close_input': (e, t) ->
+    id = new Meteor.Collection.ObjectID(e.currentTarget.dataset.id)
+    HUMAN_FORM.remove(_id: id)
+
+  'keypress .contact_form': (e, t) ->
+    if e.which is 13
+      e.preventDefault()
+
+  'click .contact_form .form_submit': (e, t) ->
+    arr = []
+    index_p = 0
+    parentdiv = t.findAll('.parentdiv')
+    while index_p < parentdiv.length
+      barr = []
+      index = 0
+      input = $(parentdiv[index_p]).find(':input')
+      while index < input.length
+        value = undefined
+        id = new Meteor.Collection.ObjectID(input[index].dataset.sid)
+        if input[index].localName is 'select'
+          if input[index].value isnt "" and input[index].value isnt undefined
+            value = new Meteor.Collection.ObjectID(input[index].value)
+        else if $(input[index]).hasClass('input_select')
+          if input[index].dataset.value isnt "" and input[index].dataset.value isnt undefined
+            value = new Meteor.Collection.ObjectID(input[index].dataset.value)
+        else
+          value = input[index].value
+        if value isnt "" and value isnt undefined
+          barr[index] = {id: id, value: value}
+          index++
+        else
+          input.splice(index, 1)
+        
+      if barr.length > 0
+        arr[index_p] = barr
+        index_p++
+      else
+        parentdiv.splice(index_p, 1)
+      
+    console.log arr
+    Meteor.call "insert_human", arr
+
+  
+Template._each_form_element.helpers
 
   input_select_helper: ->
     CITIES.find()
 
   select_options: (id) ->
-    piece = ADATA.findOne(_id: id)
-    ADATA.find({doc_schema: piece.value_schema})
+    ADATA.find({doc_schema: id})
 
   select_options_arr: (id) ->
     ADATA.find(parent: id).fetch()
 
-  h_input_large: ->
-    a = 'large-'+this.input_size+ ' columns left parentdiv'
-    a
-  h_input_small: ->
-    a = 'small-'+this.input_small_size+ ' columns'
-    a
-  h_select_small: ->
-    a = 'small-'+this.select_small_size+ ' columns'
-    a
+
+Template.add_contact.helpers
+
+  schema: ->
+    human = DATA.findOne(doc_name: "humans", doc_schema: "doc_schema")
+    if human
+      ADATA.find({p_doc_schema: human._id, button_name: {$exists: true}})
+
+  input_element: ->
+    HUMAN_FORM.find()
+  
 
 Template.display_humans.helpers
   humans: ->
@@ -305,8 +302,17 @@ Template.inline_editor.helpers
       is_editing(sid.id + sid.sid + sid.index)
     else
       is_editing(sid.id + sid.sid)
-  kadui: (a) ->
-    console.log this
+  kadui: ->
+    if this.index
+      h = this.id + this.sid + this.index
+    else
+      h = this.id + this.sid
+    i = Session.get('path-' + h)
+    console.log i
+    b = new Meteor.Collection.ObjectID(this.sid)
+    a = ADATA.findOne(_id: b)
+    [a]
+
 Template.__display_humans.events
   'click .inlineedit': (e, t) ->
     if e.currentTarget.dataset.index isnt '' and e.currentTarget.dataset.index isnt undefined and e.currentTarget.dataset.index isnt '0'
