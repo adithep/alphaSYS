@@ -1,24 +1,24 @@
-<template name='__display_humans'>{{#if this.full_name}}<div><span data-path='full_name'>Full Name</span><div>{{#if this.full_name.titles}}
-<span>Titles: {{#inline_editor combine_sid this 'd2ca2e7892c1b2af2783a413'}} editing content
+<template name='__display_humans'>{{#if this.full_name}}<div class='mandiv'><span data-path='full_name'>Full Name</span><div class='mandiv'>{{#if this.full_name.titles}}
+<span>Titles:</span> {{#inline_editor combine_sid this 'd2ca2e7892c1b2af2783a413'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='full_name.titles' data-sid='d2ca2e7892c1b2af2783a413'> {{this.full_name.titles}}</a>
 {{/inline_editor}}
-</span>{{/if}}{{#if this.full_name.first_name}}
-<span>First Name: {{#inline_editor combine_sid this 'c642b648d90073f2529d7240'}} editing content
+{{/if}}{{#if this.full_name.first_name}}
+<span>First Name:</span> {{#inline_editor combine_sid this 'c642b648d90073f2529d7240'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='full_name.first_name' data-sid='c642b648d90073f2529d7240'> {{this.full_name.first_name}}</a>
 {{/inline_editor}}
-</span>{{/if}}{{#if this.full_name.middle_name}}
-<span>Middle Name: {{#inline_editor combine_sid this '51f4510c881064b94b151525'}} editing content
+{{/if}}{{#if this.full_name.middle_name}}
+<span>Middle Name:</span> {{#inline_editor combine_sid this '51f4510c881064b94b151525'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='full_name.middle_name' data-sid='51f4510c881064b94b151525'> {{this.full_name.middle_name}}</a>
 {{/inline_editor}}
-</span>{{/if}}{{#if this.full_name.last_name}}
-<span>Last Name: {{#inline_editor combine_sid this '0a159d091a4b3cd2b4af07b5'}} editing content
+{{/if}}{{#if this.full_name.last_name}}
+<span>Last Name:</span> {{#inline_editor combine_sid this '0a159d091a4b3cd2b4af07b5'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='full_name.last_name' data-sid='0a159d091a4b3cd2b4af07b5'> {{this.full_name.last_name}}</a>
 {{/inline_editor}}
-</span>{{/if}}</div></div>{{/if}}{{#if this.email}}<div><span data-path='email'>Email</span><div>{{#if this.email.main}}
+{{/if}}</div></div>{{/if}}{{#if this.email}}<div class='mandiv'><span data-path='email'>Email</span><div class='mandiv'>{{#if this.email.main}}
 <span data-path='email.main'>Main: </span>
 <ul> {{#each dude this.email.main this._id}}
 <li> {{#inline_editor combine_sid this '85480e134e42e9eeff92b852'}} editing content
@@ -39,7 +39,7 @@
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='email.work.{{$index}}' data-sid='bb828c471e7c6e96ef0dece6'> {{this.$value}}</a>
 {{/inline_editor}} </li>
-{{/each}}</ul> {{/if}}</div></div>{{/if}}{{#if this.mobile}}<div><span data-path='mobile'>Mobile</span><div>{{#if this.mobile.main}}
+{{/each}}</ul> {{/if}}</div></div>{{/if}}{{#if this.mobile}}<div class='mandiv'><span data-path='mobile'>Mobile</span><div class='mandiv'>{{#if this.mobile.main}}
 <span data-path='mobile.main'>Main: </span>
 <ul> {{#each dude this.mobile.main this._id}}
 <li> {{#inline_editor combine_sid this '2ad155b81b3057c5a6ac3af1'}} editing content
@@ -60,34 +60,34 @@
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='mobile.work.{{$index}}' data-sid='e787fbf6d6cad25c8015e2e3'> {{this.$value}}</a>
 {{/inline_editor}} </li>
-{{/each}}</ul> {{/if}}</div></div>{{/if}}{{#if this.service}}<div><span data-path='service'>Service:</span> {{#each dude this.service this._id}}<div>{{#if this.date_of_entry}}
-<span>Date: {{#inline_editor combine_sid this 'fe052800a1b39c7c736d00e2'}} editing content
+{{/each}}</ul> {{/if}}</div></div>{{/if}}{{#if this.service}}<div class='mandiv'><span data-path='service'>Service:</span> {{#each dude this.service this._id}}<div class='mandiv'>{{#if this.date_of_entry}}
+<span>Date:</span> {{#inline_editor combine_sid this 'fe052800a1b39c7c736d00e2'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='service.{{$index}}.date_of_entry' data-sid='fe052800a1b39c7c736d00e2'> {{this.date_of_entry}}</a>
 {{/inline_editor}}
-</span>{{/if}}{{#if this.service}}
-<span>Service: {{#inline_editor combine_sid this '936458a7d991491b810a29c4'}} editing content
+{{/if}}{{#if this.service}}
+<span>Service:</span> {{#inline_editor combine_sid this '936458a7d991491b810a29c4'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='service.{{$index}}.service' data-sid='936458a7d991491b810a29c4'> {{this.service}}</a>
 {{/inline_editor}}
-</span>{{/if}}{{#if this.currency}}
-<span>Currecny: {{#inline_editor combine_sid this '16ce7df0a6f0602e419f52cd'}} editing content
+{{/if}}{{#if this.currency}}
+<span>Currecny:</span> {{#inline_editor combine_sid this '16ce7df0a6f0602e419f52cd'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='service.{{$index}}.currency' data-sid='16ce7df0a6f0602e419f52cd'> {{this.currency}}</a>
 {{/inline_editor}}
-</span>{{/if}}{{#if this.cost}}
-<span>Cost: {{#inline_editor combine_sid this 'acec609ed3a0446aa38b74a4'}} editing content
+{{/if}}{{#if this.cost}}
+<span>Cost:</span> {{#inline_editor combine_sid this 'acec609ed3a0446aa38b74a4'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='service.{{$index}}.cost' data-sid='acec609ed3a0446aa38b74a4'> {{this.cost}}</a>
 {{/inline_editor}}
-</span>{{/if}}</div>{{/each}}</div>{{/if}}{{#if this.date_of_birth}}
-<span>Date of Birth: {{#inline_editor combine_sid this 'd3626edb45f8726b2dacc2f6'}} editing content
+{{/if}}</div>{{/each}}</div>{{/if}}{{#if this.date_of_birth}}
+<span>Date of Birth:</span> {{#inline_editor combine_sid this 'd3626edb45f8726b2dacc2f6'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='date_of_birth' data-sid='d3626edb45f8726b2dacc2f6'> {{this.date_of_birth}}</a>
 {{/inline_editor}}
-</span>{{/if}}{{#if this.city}}
-<span>City: {{#inline_editor combine_sid this '1ec45abfa5ab4449fe149ac7'}} editing content
+{{/if}}{{#if this.city}}
+<span>City:</span> {{#inline_editor combine_sid this '1ec45abfa5ab4449fe149ac7'}} editing content
 {{else}}
 <a class='inlineedit' data-index='{{$index}}' data-path='city' data-sid='1ec45abfa5ab4449fe149ac7'> {{this.city}}</a>
 {{/inline_editor}}
-</span>{{/if}}</template>
+{{/if}}</template>

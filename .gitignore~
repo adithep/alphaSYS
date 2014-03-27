@@ -9,4 +9,3 @@ node_modules/*
 .meteor
 smart.lock
 αSΨS/packages
-packages/core-layout/schema.html

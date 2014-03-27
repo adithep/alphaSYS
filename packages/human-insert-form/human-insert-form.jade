@@ -14,37 +14,34 @@ template(name="_each_input")
   div(class=h_input_large, data-sid=this._id._str)
     div(class="row collapse")
       each this.form_element
-        +_each_form_element
+        div(class=h_input_small)
+          +_each_form_element
       unless input_starting
         div(class="small-1 columns")
           a(class="button postfix close_input", data-id=this._id._str) X
         
 template(name="_each_form_element")
   if object_keys_arr
-    div(class=h_select_small)
-      select(name=this.key_name, data-sid=this._sid._str)
-        each select_options_arr this._sid
-          option(value=this._id._str) #{this.select_opt_name}
+    select(name=this.key_name, data-sid=this._sid._str)
+      each select_options_arr this._sid
+        option(value=this._id._str) #{this.select_opt_name}
   if this.input
-    div(class=h_input_small)
-      input(name=key_name, type=this.input_type, placeholder=this.placeholder, data-sid=this._sid._str, value=today_isodate)
-      div(data-alert="", class="alert-box alaa warning")
-        span invalid
+    input(class="input_box", name=key_name, type=this.input_type, placeholder=this.placeholder, data-sid=this._sid._str, value=today_isodate)
+    div(data-alert="", class="alert-box alaa warning")
+      span invalid
   if select
-    div(class=h_input_small)
-      select(name=this.key_name, data-sid=this._sid._str)
-        each select_options this.value_schema
-          if default
-            option(value=this._id._str, selected="", data-def="1") #{this.doc_name}
-          else
-            option(value=this._id._str) #{this.doc_name}
+    select(name=this.key_name, data-sid=this._sid._str)
+      each select_options this.value_schema
+        if default
+          option(value=this._id._str, selected="", data-def="1") #{this.doc_name}
+        else
+          option(value=this._id._str) #{this.doc_name}
   if input_select
-    div(class=h_input_small)
-      input(name=key_name, type=this.input_type, placeholder=this.placeholder, data-sid=this._sid._str, data-schema=this.value_schema._str, class="input_select", autocomplete="off")
-      div(class="panel input_select_box")
-        ul(class="input_select_list")
-          each input_select_helper this.value_schema
-            +select_list
+    input(name=key_name, type=this.input_type, placeholder=this.placeholder, data-sid=this._sid._str, data-schema=this.value_schema._str, class="input_select input_box", autocomplete="off")
+    div(class="panel input_select_box")
+      ul(class="input_select_list")
+        each input_select_helper this.value_schema
+          +select_list
     
 
 template(name="_each_schema")
@@ -70,7 +67,11 @@ template(name="inline_editor")
     +UI.elseBlock
 
 template(name="__form_element")
-  each kadui
-    div(class=h_input_large, data-sid=this._id._str)
+  span
+    div
       div(class="row collapse")
-        +_each_form_element
+        each kadui
+          div(class="small-11 columns")
+            +_each_form_element
+        div(class="small-1 columns")
+          a(class="button postfix close_input", data-id=this._id._str) X

@@ -65,6 +65,8 @@ DATA.before.insert (userid, doc) ->
     console.log doc
     doc
 
+path_index = (obj, i) ->
+  obj[i]
 
 Meteor.methods
 
@@ -91,6 +93,12 @@ Meteor.methods
     DATA.insert(mobj)
 
     return
+
+  get_data: (id, path) ->
+    id = new Meteor.Collection.ObjectID(id)
+    a = DATA.findOne(_id: id)
+    j = path.split(".").reduce path_index, a
+    return j
 
   save_human_json: ->
     human_schema = DATA.findOne(doc_name: "humans", doc_schema: "doc_schema")
@@ -222,11 +230,11 @@ htmlobj = (schema, html, path, fath) ->
             kabush = p
           ht = ht +
           """{{#if this.#{p}}}
-          <span>#{schema[index].placeholder}: {{#inline_editor combine_sid this '#{schema[index]._sid._str}'}} editing content
+          <span>#{schema[index].placeholder}:</span> {{#inline_editor combine_sid this '#{schema[index]._sid._str}'}} editing content
           {{else}}
           <a class='inlineedit' data-index='{{$index}}' data-path='#{kabush}' data-sid='#{schema[index]._sid._str}'> {{this.#{p}}}</a>
           {{/inline_editor}}
-          </span>{{/if}}"""
+          {{/if}}"""
     index++
   ht
 

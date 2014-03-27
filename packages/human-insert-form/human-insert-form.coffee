@@ -187,7 +187,16 @@ Template.add_contact.events
     t_id = e.currentTarget.dataset.id
     id = new Meteor.Collection.ObjectID(t_id)
     obj = ADATA.findOne(_id: id)
-    if (ADATA.find(parent: obj._id).count() is 0) or (obj.object_keys_arr)
+    if obj.object_keys_arr
+      obj._sid = obj._id
+      delete obj._id
+      a = _.pick(obj, 'object_keys_arr', '_sid', 'select_small_size', 'key_name')
+      a.input_small_size = a.select_small_size
+      b = _.pick(obj, 'input', 'placeholder', 'input_small_size', 'key_name', 'input_type')
+      h = {form_element: [a, b], _sid: obj._sid, input_size: obj.input_size}
+      HUMAN_FORM.insert(form_element: [a, b], _sid: obj._sid, input_size: obj.input_size)
+      
+    else if ADATA.find(parent: obj._id).count() is 0
       obj._sid = obj._id
       delete obj._id
       if obj.array
@@ -308,10 +317,14 @@ Template.inline_editor.helpers
     else
       h = this.id + this.sid
     i = Session.get('path-' + h)
-    console.log i
+    input_value = Meteor.call "get_data", this.id, i, (err, res) ->
+      Session.set('value-' + h, res)
+
     b = new Meteor.Collection.ObjectID(this.sid)
     a = ADATA.findOne(_id: b)
+    a._mid = h
     [a]
+
 
 Template.__display_humans.events
   'click .inlineedit': (e, t) ->

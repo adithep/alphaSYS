@@ -70,7 +70,9 @@ UI.body.events
 
 UI.body.helpers
 	today_isodate: ->
-		if this.input_today
+		if this._mid
+			Session.get('value-' + this._mid)
+		else if this.input_today
 			a = new Date()
 			a.setHours(0, -a.getTimezoneOffset(), 0, 0)
 			b = a.toISOString().substring(0, 10)
