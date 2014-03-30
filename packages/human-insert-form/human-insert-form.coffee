@@ -258,11 +258,24 @@ Template._each_form_element.helpers
   input_select_helper: ->
     CITIES.find()
 
-  select_options: (id) ->
-    ADATA.find({doc_schema: id})
+  select_options: ->
+    if this._mid
+      a = Session.get('value-' + this._mid)
+      if a
+        index = 0
+        h = ADATA.find({doc_schema: this.value_schema}).fetch()
+        while index < h.length
+          if h[index]._id._str is a._str
+            h[index].def = true
+            break
+          index++
+        h
 
-  select_options_arr: (id) ->
-    ADATA.find(parent: id).fetch()
+    else
+      ADATA.find({doc_schema: this.value_schema})
+
+  select_options_arr: ->
+    ADATA.find(parent: this._sid)
 
 
 Template.add_contact.helpers
@@ -281,6 +294,8 @@ Template.display_humans.helpers
     human = DATA.findOne(doc_name: "humans", doc_schema: "doc_schema")
     if human
       ADATA.find(doc_schema: human._id)
+
+Template.__display_humans.helpers
   dude: (arg, id) ->
     i = 0
     item = []
@@ -297,20 +312,27 @@ Template.display_humans.helpers
       item[i] = obj
       i++
     item
+  combine_sid: (a, b) ->
+    if a._id
+      suk = a._id._str
+    else if a.__id
+      suk = a.__id._str
 
-is_editing = (id) ->
-  Session.equals('is_editing-'+id, true)
-set_editing = (id, is_editing) ->
-  Session.set('is_editing-'+id, is_editing)
-set_path = (id, path) ->
-  Session.set('path-'+id, path)
+    obj = {'id': suk, 'sid': b}
+    if a.$index or a.$index is 0
+      obj.index = a.$index
+    obj
+
+
 
 Template.inline_editor.helpers
   is_editing: (sid) ->
-    if sid.index
-      is_editing(sid.id + sid.sid + sid.index)
-    else
-      is_editing(sid.id + sid.sid)
+    if sid
+      if sid.index
+        is_editing(sid.id + sid.sid + sid.index)
+      else
+        is_editing(sid.id + sid.sid)
+Template.__form_element.helpers
   kadui: ->
     if this.index
       h = this.id + this.sid + this.index
@@ -318,6 +340,7 @@ Template.inline_editor.helpers
       h = this.id + this.sid
     i = Session.get('path-' + h)
     input_value = Meteor.call "get_data", this.id, i, (err, res) ->
+      console.log res
       Session.set('value-' + h, res)
 
     b = new Meteor.Collection.ObjectID(this.sid)
@@ -347,6 +370,13 @@ Template.__display_humans.events
       task = t.data._id._str + e.currentTarget.dataset.sid
     set_editing(task, false)
 
+
+is_editing = (id) ->
+  Session.equals('is_editing-'+id, true)
+set_editing = (id, is_editing) ->
+  Session.set('is_editing-'+id, is_editing)
+set_path = (id, path) ->
+  Session.set('path-'+id, path)
 
 ojts = (id) ->
   arr = []

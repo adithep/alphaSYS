@@ -68,38 +68,20 @@ UI.body.events
 	'click #logout': (e, t) ->
 		Meteor.logout()
 
-UI.body.helpers
-	today_isodate: ->
-		if this._mid
-			Session.get('value-' + this._mid)
-		else if this.input_today
-			a = new Date()
-			a.setHours(0, -a.getTimezoneOffset(), 0, 0)
+UI.registerHelper 'today_isodate', ->
+	if this._mid
+		a = Session.get('value-' + this._mid)
+		if a instanceof Date
 			b = a.toISOString().substring(0, 10)
-			b
+			return b
 		else
-			false
-	combine_sid: (a, b) ->
-		if a._id
-			suk = a._id._str
-		else if a.__id
-			suk = a.__id._str
-
-		obj = {'id': suk, 'sid': b}
-		if a.$index or a.$index is 0
-			obj.index = a.$index
-		obj
-
-	h_input_small: ->
-    a = 'small-'+this.input_small_size+ ' columns'
-    a
-
-  h_select_small: ->
-    a = 'small-'+this.select_small_size+ ' columns'
-    a
-
-  h_input_large: ->
-    a = 'large-'+this.input_size+ ' columns left parentdiv'
-    a
+			return a
+	else if this.input_today
+		a = new Date()
+		a.setHours(0, -a.getTimezoneOffset(), 0, 0)
+		b = a.toISOString().substring(0, 10)
+		b
+	else
+		false
 
 

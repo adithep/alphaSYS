@@ -3,7 +3,8 @@ template(name="add_contact")
   a(class="button right tiny save_human_json") Save Json
 
   ul(class="button-group radius")
-    +_each_schema
+    each schema
+      +_schema
   form(class="contact_form")
     div(class="row")
       each input_element
@@ -11,10 +12,10 @@ template(name="add_contact")
     a(class="button form_submit") Submit
 
 template(name="_each_input")
-  div(class=h_input_large, data-sid=this._id._str)
+  div(class='large-#{this.input_size} columns left', data-sid=this._id._str)
     div(class="row collapse")
       each this.form_element
-        div(class=h_input_small)
+        div(class='small-#{this.input_small_size} columns')
           +_each_form_element
       unless input_starting
         div(class="small-1 columns")
@@ -23,7 +24,7 @@ template(name="_each_input")
 template(name="_each_form_element")
   if object_keys_arr
     select(name=this.key_name, data-sid=this._sid._str)
-      each select_options_arr this._sid
+      each select_options_arr
         option(value=this._id._str) #{this.select_opt_name}
   if this.input
     input(class="input_box", name=key_name, type=this.input_type, placeholder=this.placeholder, data-sid=this._sid._str, value=today_isodate)
@@ -31,22 +32,21 @@ template(name="_each_form_element")
       span invalid
   if select
     select(name=this.key_name, data-sid=this._sid._str)
-      each select_options this.value_schema
-        if default
-          option(value=this._id._str, selected="", data-def="1") #{this.doc_name}
-        else
-          option(value=this._id._str) #{this.doc_name}
+      each select_options
+        +_select_option
   if input_select
     input(name=key_name, type=this.input_type, placeholder=this.placeholder, data-sid=this._sid._str, data-schema=this.value_schema._str, class="input_select input_box", autocomplete="off")
     div(class="panel input_select_box")
       ul(class="input_select_list")
         each input_select_helper this.value_schema
           +select_list
-    
-
-template(name="_each_schema")
-  each schema
-    +_schema
+template(name="_select_option")
+  if this.def
+    option(value=this._id._str, selected="selected", data-def="1") #{this.doc_name}
+  else if this.default
+    option(value=this._id._str, selected="selected", data-def="1") #{this.doc_name}
+  else
+    option(value=this._id._str) #{this.doc_name}
 
 template(name="select_list")
   li(class="lala_item #{this.e_class}", data-value=this._id._str) #{this.doc_name} #{this.country}
